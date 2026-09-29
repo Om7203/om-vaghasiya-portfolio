@@ -2,6 +2,8 @@
 
 A bilingual personal portfolio showcasing Om's work in AI engineering, machine learning, and software. The site is plain HTML, CSS, and JavaScript so it can be edited without a build step.
 
+Live site: https://om-vaghasiya.omvaghasiya2003.chatgpt.site
+
 ## Content
 
 The professional history and project descriptions are based on Om's CV and supporting documents reviewed in September 2026. The internship certificate confirms work at Drees & Sommer from August 2025 to January 2026. The transcript confirms 195 ECTS as of August 2026. Project source links can be added as individual repositories become ready to share.
