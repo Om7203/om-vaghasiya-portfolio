@@ -11,7 +11,7 @@ const cases = {
       branches: [['ANSWER','Policy text with citation'],['HANDOFF','A person should check this'],['ABSTAIN','No matching evidence']],
       evidence: [['8 / 8','Fixed evaluation examples passed'],['7','Automated tests passed'],['3','Explicit response routes']],
       limit: 'This is a prototype, not a live customer service system. The public demo uses deterministic rules and fictional policies; it does not call an LLM, create a ticket, or access customer data.',
-      next: 'Next I want to compare a LangChain retrieval experiment and a controlled LLM answer step against this baseline. I will keep the same handoff and abstention tests before claiming an improvement.'
+      next: 'I have added a small LangChain retrieval exercise. Next I want to test embeddings and a controlled LLM answer step against this baseline. I will keep the same handoff and abstention tests before claiming an improvement.'
     },
     de: {
       kind: 'EIGENSTÄNDIGES PROJEKT · FUNKTIONIERENDER PROTOTYP', title: 'Support-Anfragen<br><em>mit sichtbarem Entscheidungsweg.</em>',
@@ -23,7 +23,7 @@ const cases = {
       branches: [['ANTWORT','Richtlinie mit Quelle'],['ÜBERGABE','Ein Mensch sollte prüfen'],['KEINE ANTWORT','Keine passende Quelle']],
       evidence: [['8 / 8','Feste Evaluationsbeispiele bestanden'],['7','Automatisierte Tests bestanden'],['3','Klare Antwortpfade']],
       limit: 'Dies ist ein Prototyp, kein echter Kundenservice. Die öffentliche Demo verwendet feste Regeln und fiktive Richtlinien. Sie ruft kein LLM auf, erstellt kein Ticket und greift nicht auf Kundendaten zu.',
-      next: 'Als Nächstes möchte ich LangChain-Retrieval und eine kontrollierte LLM-Antwort mit dieser Basis vergleichen. Die Tests für Übergabe und Nichtantwort bleiben dabei bestehen.'
+      next: 'Eine kleine LangChain-Retrieval-Übung ist bereits im Repository. Als Nächstes möchte ich Embeddings und eine kontrollierte LLM-Antwort mit dieser Basis vergleichen. Die Tests für Übergabe und Nichtantwort bleiben dabei bestehen.'
     }
   },
   emotion: {
