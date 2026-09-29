@@ -1,21 +1,9 @@
-# Om Vaghasiya — portfolio
+# Om Vaghasiya
 
-A bilingual personal portfolio showcasing Om's work in AI engineering, machine learning, and software. The site is plain HTML, CSS, and JavaScript so it can be edited without a build step.
+Hi, I'm Om. I'm finishing my bachelor's in Artificial Intelligence at TH Deggendorf and looking for a full-time role in AI or software development. This is the source for [my portfolio](https://om7203.github.io/om-vaghasiya-portfolio/).
 
-Live site: https://om-vaghasiya.omvaghasiya2003.chatgpt.site
+At Bauhaus Luftfahrt, I work on AI-assisted tools for MATLAB-based engineering tasks. During my internship at Drees & Sommer, I helped evaluate language models and worked with OCR and vision-language models. My own and university projects cover NLP, computer vision, chatbots, and prediction apps.
 
-## Content
+The website is available in English and German. It uses plain HTML, CSS, and JavaScript so it stays easy to update. The site files are in [`docs/`](docs/); you can open `docs/index.html` locally without installing anything.
 
-The professional history and project descriptions are based on Om's CV and supporting documents reviewed in September 2026. The internship certificate confirms work at Drees & Sommer from August 2025 to January 2026. The transcript confirms 195 ECTS as of August 2026. Project source links can be added as individual repositories become ready to share.
-
-Personal source documents, the transcript, and certificates are intentionally excluded from this public repository. The portfolio contains only information selected for public presentation.
-
-## Edit locally
-
-Open `dist/index.html` in a browser. Content and interactions are in `dist/script.js`; styles are in `dist/styles.css`. The Site publishing configuration is in `.openai/hosting.json`.
-
-## Future improvements
-
-- Add direct links, demos, screenshots, and measurable results for individual projects once available.
-- Add a professional portrait if Om chooses one.
-- Update the graduation and availability dates when confirmed.
+If you'd like to talk about a project or an opportunity, you can [email me](mailto:omvaghasiya2003@gmail.com) or find me on [LinkedIn](https://www.linkedin.com/in/om-vaghasiya-a972ba286/).
