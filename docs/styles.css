@@ -77,3 +77,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
 .contact-links a { font-size:14px; }
 @media (max-width:850px) { .hero { grid-template-columns:1fr; }.hero-visual { min-height:0; margin-top:30px; }.project-filters { margin-left:0; }.proof-strip > div { padding:24px 14px; }.proof-strip span { font-size:13px; } }
 @media (max-width:500px) { .hero-visual { transform:none; margin:24px 0 0; }.workflow-card { padding:20px; }.workflow-tabs button { font-size:11px; }.proof-strip { grid-template-columns:1fr; }.proof-strip > div,.proof-strip > div:first-child { padding:17px 0; border-right:0; border-bottom:1px solid var(--line); }.proof-strip strong { font-size:28px; }.contact-links { flex-wrap:wrap; } }
+.project-links { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+.case-link { color:#10140d; background:var(--accent); padding:8px 11px; font-size:13px; font-weight:800; white-space:nowrap; }
+.case-link:hover { background:#e0ff9e; }
+@media (max-width:500px) { .project-bottom { align-items:flex-start; flex-direction:column; }.project-links { align-items:flex-start; } }
