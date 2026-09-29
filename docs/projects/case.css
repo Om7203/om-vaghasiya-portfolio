@@ -4,3 +4,4 @@
 .hero h1 { overflow-wrap:anywhere; }
 
 .demo-proof { margin:32px 0 0; border:1px solid var(--line); background:var(--panel); padding:12px; } .demo-proof img { display:block; width:100%; height:auto; } .demo-proof figcaption { color:var(--muted); font:12px 'DM Mono',monospace; padding:12px 5px 3px; }
+.integration-proof { margin-top:20px; } .integration-proof a { color:var(--acid); border-bottom:1px solid var(--acid); }

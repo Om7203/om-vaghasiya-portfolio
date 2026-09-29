@@ -4,9 +4,9 @@ const cases = {
     en: {
       kind: 'INDEPENDENT BUILD · WORKING PROTOTYPE', title: 'Support questions,<br><em>with a visible decision path.</em>',
       summary: 'I built a small support triage workflow to make three behaviors easy to inspect: answer from a source, ask a person to take over, or say when the answer is unknown.',
-      role: 'Independent learning project', period: 'September 2026', stack: 'LangGraph · Node.js · JavaScript',
+      role: 'Independent learning project', period: 'September 2026', stack: 'LangGraph · Node.js · n8n',
       challenge: 'A support assistant should not sound certain when it has no evidence. It should also avoid pretending it can handle payment or account actions.',
-      approach: 'The workflow checks the input, retrieves from four fictional help articles, and takes an explicit branch. Known policy questions get an answer and citation. Payment or account requests go to a handoff message. Unknown questions end with an abstention. A small web interface shows the path it took.',
+      approach: 'The workflow checks the input, retrieves from four fictional help articles, and takes an explicit branch. Known policy questions get an answer and citation. Payment or account requests go to a handoff message. Unknown questions end with an abstention. A small web interface shows the path it took. I also ran an importable n8n workflow that calls the local API and displays its structured response.',
       nodes: [['INPUT','Question'],['CHECK','Validate & retrieve'],['DECIDE','Choose route'],['OUTPUT','Answer or handoff']],
       branches: [['ANSWER','Policy text with citation'],['HANDOFF','A person should check this'],['ABSTAIN','No matching evidence']],
       evidence: [['8 / 8','Fixed evaluation examples passed'],['7','Automated tests passed'],['3','Explicit response routes']],
@@ -16,9 +16,9 @@ const cases = {
     de: {
       kind: 'EIGENSTÄNDIGES PROJEKT · FUNKTIONIERENDER PROTOTYP', title: 'Support-Anfragen<br><em>mit sichtbarem Entscheidungsweg.</em>',
       summary: 'Ich habe einen kleinen Workflow für Support-Anfragen gebaut. Er kann eine Antwort mit Quelle geben, an einen Menschen verweisen oder offen sagen, dass die Antwort nicht bekannt ist.',
-      role: 'Eigenständiges Lernprojekt', period: 'September 2026', stack: 'LangGraph · Node.js · JavaScript',
+      role: 'Eigenständiges Lernprojekt', period: 'September 2026', stack: 'LangGraph · Node.js · n8n',
       challenge: 'Ein Support-Assistent sollte ohne Belege keine sichere Antwort geben. Bei Zahlungs- oder Kontothemen darf er nicht so tun, als könne er selbst handeln.',
-      approach: 'Der Workflow prüft die Eingabe, sucht in vier fiktiven Hilfeartikeln und wählt einen klaren Pfad. Bekannte Fragen erhalten eine Antwort mit Quelle. Zahlungs- oder Kontofragen führen zur Übergabe. Bei unbekannten Fragen bleibt das System bei einer ehrlichen Nichtantwort. Die Oberfläche zeigt den gewählten Pfad.',
+      approach: 'Der Workflow prüft die Eingabe, sucht in vier fiktiven Hilfeartikeln und wählt einen klaren Pfad. Bekannte Fragen erhalten eine Antwort mit Quelle. Zahlungs- oder Kontofragen führen zur Übergabe. Bei unbekannten Fragen bleibt das System bei einer ehrlichen Nichtantwort. Die Oberfläche zeigt den gewählten Pfad. Zusätzlich habe ich einen importierbaren n8n-Workflow ausgeführt, der die lokale API aufruft und die strukturierte Antwort zeigt.',
       nodes: [['EINGABE','Frage'],['PRÜFEN','Validieren & suchen'],['ENTSCHEIDEN','Pfad wählen'],['AUSGABE','Antwort oder Übergabe']],
       branches: [['ANTWORT','Richtlinie mit Quelle'],['ÜBERGABE','Ein Mensch sollte prüfen'],['KEINE ANTWORT','Keine passende Quelle']],
       evidence: [['8 / 8','Feste Evaluationsbeispiele bestanden'],['7','Automatisierte Tests bestanden'],['3','Klare Antwortpfade']],
@@ -103,6 +103,14 @@ function render() {
     figure.className = 'demo-proof';
     figure.innerHTML = `<img src="assets/support-demo.png" alt="A delivery question answered by the local LangGraph server, with a citation and execution trace" loading="lazy"><figcaption>${language === 'de' ? 'Tatsächliche Ausgabe des lokal laufenden LangGraph-Servers.' : 'Actual output from the locally running LangGraph server.'}</figcaption>`;
     document.querySelector('#evidence').append(figure);
+    const workflowFigure = document.createElement('figure');
+    workflowFigure.className = 'demo-proof';
+    workflowFigure.innerHTML = `<img src="assets/n8n-workflow.png" alt="The imported three-node workflow in the local n8n editor" loading="lazy"><figcaption>${language === 'de' ? 'Importierter Workflow in der lokalen n8n-Oberfläche.' : 'Imported workflow in the local n8n editor.'}</figcaption>`;
+    document.querySelector('#evidence').append(workflowFigure);
+    const integration = document.createElement('p');
+    integration.className = 'integration-proof';
+    integration.innerHTML = `${language === 'de' ? 'Der n8n-Workflow wurde lokal ausgeführt. ' : 'The n8n workflow was executed locally. '}<a href="${record.repo}/blob/main/docs/N8N.md" target="_blank" rel="noopener noreferrer">${language === 'de' ? 'Workflow und Ergebnis ansehen ↗' : 'See the workflow and result ↗'}</a>`;
+    document.querySelector('#evidence').append(integration);
   }
   if (id === 'plate' || id === 'emotion') {
     const link = document.createElement('a');
