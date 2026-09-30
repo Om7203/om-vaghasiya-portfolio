@@ -81,3 +81,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
 .case-link { color:#10140d; background:var(--accent); padding:8px 11px; font-size:13px; font-weight:800; white-space:nowrap; }
 .case-link:hover { background:#e0ff9e; }
 @media (max-width:500px) { .project-bottom { align-items:flex-start; flex-direction:column; }.project-links { align-items:flex-start; } }
+
+/* A short path from claimed skills to inspectable work. */
+.explore-teaser { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(310px,.9fr); gap:40px; align-items:center; margin-top:95px; padding:54px 62px; border:1px solid rgba(200,245,106,.29); background:linear-gradient(120deg,#17221a,#101612 70%); overflow:hidden; position:relative; }
+.explore-teaser:before { content:''; position:absolute; width:300px; height:300px; right:-130px; top:-150px; border:1px solid rgba(117,232,198,.2); border-radius:50%; box-shadow:0 0 0 45px rgba(117,232,198,.02),0 0 0 90px rgba(117,232,198,.015); }
+.explore-teaser h2 { font-size:clamp(34px,4vw,55px); line-height:1.1; letter-spacing:-.06em; font-weight:600; margin:22px 0 17px; }
+.explore-teaser h2 em { font-style:normal; color:var(--accent); }
+.explore-teaser-copy { position:relative; z-index:1; }
+.explore-teaser-copy>p:not(.eyebrow) { color:var(--muted); font-size:15px; max-width:510px; line-height:1.8; margin-bottom:26px; }
+.explore-teaser-art { position:relative; z-index:1; min-height:215px; display:flex; align-items:center; justify-content:center; }
+.teaser-node { flex:none; width:88px; height:88px; border:1px solid rgba(117,232,198,.55); border-radius:50%; display:grid; place-items:center; align-content:center; color:var(--mint); text-align:center; font:500 11px/1.35 'DM Mono',monospace; letter-spacing:.04em; }
+.teaser-node-active { width:112px; height:112px; background:var(--accent); color:#172011; border:0; font-weight:700; }
+.teaser-bridge { width:45px; height:1px; background:var(--mint); opacity:.6; }
+@media(max-width:850px) { .explore-teaser { grid-template-columns:1fr; padding:40px 30px; margin-top:70px; gap:10px; } .explore-teaser-art { min-height:140px; } }
+@media(max-width:500px) { .explore-teaser { padding:31px 22px; margin-top:60px; } .explore-teaser-art { transform:scale(.82); margin:0 -30px; } }
