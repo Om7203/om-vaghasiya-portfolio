@@ -1,0 +1,9 @@
+{
+  "name": "om-portfolio-chat-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node local-server.mjs",
+    "test": "node --test --experimental-test-isolation=none answer.test.mjs"
+  }
+}
