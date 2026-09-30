@@ -1,6 +1,6 @@
 const translations = {
   en: {
-    nav: { about: 'About', experience: 'Experience', projects: 'Projects', explore: 'Explore', lab: 'Live demo', contact: 'Contact <span>↗</span>' },
+    nav: { about: 'About', experience: 'Experience', projects: 'Projects', explore: 'Explore', lab: 'Live demo', contact: 'Contact <span>↗</span>', menuOpen: 'Open menu', menuClose: 'Close menu' },
     hero: { eyebrow: 'AI ENGINEERING · MACHINE LEARNING · SOFTWARE', title: "Hi, I'm Om. I build and test AI systems.", description: "I build and evaluate AI workflows. At Bauhaus Luftfahrt, I work on an assistant for MATLAB engineering; at Drees & Sommer, I helped evaluate more than 30 language models. I'm finishing my AI bachelor's and looking for a full-time role.", tryLab: 'Try document search', viewProjects: 'See my projects', github: 'My GitHub', openTo: 'Open to full-time roles in AI and software' },
     workflow: { kicker: "A few things I've worked on", tabs: ['01 / LLMs', '02 / MATLAB', '03 / Projects'], steps: [{title:'Comparing language models', text:'At Drees & Sommer, I helped build a framework to evaluate more than 30 LLMs on curated and synthetic datasets.'},{title:'AI tools for engineers', text:'At Bauhaus Luftfahrt, I work on connecting language models with MATLAB, repository files, and tools in controlled environments.'},{title:'Learning by building', text:'My projects include emotion detection, license plate recognition, chatbots, and prediction apps.'}] },
     proof: { models: 'Language models in a Drees & Sommer evaluation framework', demos: 'Public demos you can try', cases: 'Detailed project case studies' },
@@ -16,7 +16,7 @@ const translations = {
     footer: { text: 'Thanks for visiting.' }, common: { present: 'PRESENT' }
   },
   de: {
-    nav: { about: 'Über mich', experience: 'Erfahrung', projects: 'Projekte', explore: 'Entdecken', lab: 'Live-Demo', contact: 'Kontakt <span>↗</span>' },
+    nav: { about: 'Über mich', experience: 'Erfahrung', projects: 'Projekte', explore: 'Entdecken', lab: 'Live-Demo', contact: 'Kontakt <span>↗</span>', menuOpen: 'Menü öffnen', menuClose: 'Menü schließen' },
     hero: { eyebrow: 'AI ENGINEERING · MACHINE LEARNING · SOFTWARE', title: 'Hallo, ich bin Om. Ich entwickle und teste KI-Systeme.', description: 'Ich entwickle und evaluiere KI-Workflows. Bei Bauhaus Luftfahrt arbeite ich an einem Assistenten für MATLAB-Engineering; bei Drees & Sommer habe ich an der Evaluation von mehr als 30 Sprachmodellen mitgearbeitet. Ich schließe mein KI-Studium ab und suche eine Vollzeitstelle.', tryLab: 'Dokumentensuche testen', viewProjects: 'Meine Projekte', github: 'Mein GitHub', openTo: 'Offen für Vollzeitstellen in KI und Software' },
     workflow: { kicker: 'Woran ich gearbeitet habe', tabs: ['01 / LLMs', '02 / MATLAB', '03 / Projekte'], steps: [{title:'Sprachmodelle vergleichen', text:'Bei Drees & Sommer habe ich an einem Framework mitgearbeitet, das mehr als 30 LLMs auf ausgewählten und synthetischen Datensätzen evaluiert.'},{title:'KI-Tools für Ingenieure', text:'Bei Bauhaus Luftfahrt verbinde ich Sprachmodelle mit MATLAB, Repository-Dateien und Werkzeugen in kontrollierten Umgebungen.'},{title:'Durch Projekte lernen', text:'Meine Projekte reichen von Emotionserkennung und Kennzeichenerkennung bis zu Chatbots und Prognose-Apps.'}] },
     proof: { models: 'Sprachmodelle im Evaluationsframework bei Drees & Sommer', demos: 'Öffentliche Demos zum Ausprobieren', cases: 'Ausführliche Projektseiten' },
@@ -63,6 +63,7 @@ function applyLanguage(language) {
   document.title = 'Om Vaghasiya | AI & Software';
   document.querySelectorAll('[data-i18n]').forEach((element) => setText(element, dictionaryLookup(dictionary, element.dataset.i18n)));
   document.querySelectorAll('.lang-button').forEach((button) => { const active = button.dataset.lang === language; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });
+  document.querySelector('.menu-toggle').setAttribute('aria-label', dictionary.nav[document.querySelector('.menu-toggle').getAttribute('aria-expanded') === 'true' ? 'menuClose' : 'menuOpen']);
   renderProjects(language);
   document.querySelectorAll('.filter-button').forEach((button, index) => { button.textContent = dictionary.projects.filters[index]; });
   renderWorkflow(language, Number(document.querySelector('[data-step][aria-selected="true"]')?.dataset.step || 0));
@@ -76,6 +77,26 @@ document.querySelectorAll('.filter-button').forEach((button) => button.addEventL
 document.querySelectorAll('[data-step]').forEach((button) => { button.addEventListener('click', () => renderWorkflow(document.documentElement.lang, Number(button.dataset.step))); button.addEventListener('keydown', (event) => { if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return; event.preventDefault(); const current = Number(button.dataset.step); const next = (current + (event.key === 'ArrowRight' ? 1 : 2)) % 3; const target = document.querySelector(`[data-step="${next}"]`); target.focus(); renderWorkflow(document.documentElement.lang, next); }); });
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNav = document.querySelector('.site-nav');
-menuToggle.addEventListener('click', () => { const open = siteNav.classList.toggle('is-open'); menuToggle.setAttribute('aria-expanded', String(open)); });
-siteNav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { siteNav.classList.remove('is-open'); menuToggle.setAttribute('aria-expanded', 'false'); }));
+const siteHeader = document.querySelector('.site-header');
+let scrollFrame = 0;
+function updateReadingPosition() {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? Math.min(100, Math.max(0, window.scrollY / scrollable * 100)) : 0;
+  siteHeader.style.setProperty('--read-progress', `${progress}%`);
+  siteHeader.classList.toggle('is-scrolled', window.scrollY > 12);
+  scrollFrame = 0;
+}
+window.addEventListener('scroll', () => {
+  if (!scrollFrame) scrollFrame = requestAnimationFrame(updateReadingPosition);
+}, { passive: true });
+window.addEventListener('resize', updateReadingPosition);
+updateReadingPosition();
+function setMenuOpen(open) {
+  siteNav.classList.toggle('is-open', open);
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', translations[document.documentElement.lang].nav[open ? 'menuClose' : 'menuOpen']);
+}
+menuToggle.addEventListener('click', () => setMenuOpen(!siteNav.classList.contains('is-open')));
+siteNav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && siteNav.classList.contains('is-open')) { setMenuOpen(false); menuToggle.focus(); } });
 applyLanguage(localStorage.getItem('portfolio-language') || 'en');
