@@ -105,3 +105,32 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid v
 .teaser-bridge { width:45px; height:1px; background:var(--mint); opacity:.6; }
 @media(max-width:850px) { .explore-teaser { grid-template-columns:1fr; padding:40px 30px; margin-top:70px; gap:10px; } .explore-teaser-art { min-height:140px; } }
 @media(max-width:500px) { .explore-teaser { padding:31px 22px; margin-top:60px; } .explore-teaser-art { transform:scale(.82); margin:0 -30px; } }
+
+/* A personal chapter that sits alongside the professional summary. */
+.about-story-link { display:inline-flex; align-items:center; gap:15px; margin-top:25px; color:var(--accent); border-bottom:1px solid rgba(200,245,106,.35); padding-bottom:5px; font-size:13px; font-weight:700; }
+.about-story-link:hover { border-color:var(--accent); }
+.personal-section { padding-top:85px; }
+main section.personal-section { scroll-margin-top:80px; }
+.personal-heading { border-top:1px solid var(--line); padding-top:50px; }
+.personal-heading h2 { font-size:clamp(42px,5vw,70px); font-weight:500; margin:24px 0 52px; max-width:800px; }
+.personal-heading h2 em { color:var(--accent); font-style:normal; }
+.personal-layout { display:grid; grid-template-columns:minmax(280px,.86fr) minmax(0,1.14fr); gap:62px; align-items:stretch; }
+.journey-card { min-height:500px; padding:31px 36px; border:1px solid rgba(117,232,198,.28); background:radial-gradient(circle at 78% 33%,rgba(117,232,198,.12),transparent 36%),linear-gradient(140deg,#17211c,#101513 72%); position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; }
+.journey-card::after { content:''; width:250px; height:250px; position:absolute; right:-113px; top:-100px; border:1px solid rgba(200,245,106,.13); border-radius:50%; box-shadow:0 0 0 42px rgba(200,245,106,.025),0 0 0 84px rgba(200,245,106,.015); pointer-events:none; }
+.journey-label,.journey-footnote { color:var(--accent); font:500 11px 'DM Mono',monospace; letter-spacing:.1em; }
+.journey-footnote { color:#668275; }
+.journey-route { position:relative; z-index:1; padding:15px 0; }
+.journey-place { display:grid; grid-template-columns:16px 1fr; column-gap:18px; align-items:center; }
+.journey-place strong { font-size:clamp(22px,2.5vw,34px); line-height:1.1; letter-spacing:-.05em; font-weight:600; }
+.journey-place>span:last-child { grid-column:2; color:var(--muted); font:10px 'DM Mono',monospace; letter-spacing:.09em; margin-top:7px; }
+.journey-point { width:11px; height:11px; border-radius:50%; border:1px solid var(--accent); box-shadow:0 0 0 5px rgba(200,245,106,.07); }
+.journey-destination .journey-point { background:var(--accent); }
+.journey-line { height:105px; margin:10px 0 10px 5px; border-left:1px dashed rgba(117,232,198,.5); position:relative; }
+.journey-line span { position:absolute; left:42%; top:13px; color:var(--mint); font-size:54px; font-weight:400; line-height:1; opacity:.8; }
+.personal-copy { align-self:center; max-width:650px; }
+.personal-copy>p { color:var(--muted); font-size:16px; line-height:1.9; margin:0 0 24px; }
+.personal-interests { margin-top:35px; padding:24px 0 0; border-top:1px solid var(--line); }
+.personal-interests>span { color:var(--accent); font:500 11px 'DM Mono',monospace; letter-spacing:.11em; }
+.personal-interests p { color:var(--text); font-size:16px; line-height:1.8; margin:14px 0 0; }
+@media(max-width:850px) { .personal-section { padding-top:75px; } .personal-layout { grid-template-columns:1fr; gap:32px; } .journey-card { min-height:385px; } .personal-copy { max-width:740px; } }
+@media(max-width:500px) { .personal-section { padding-top:65px; } .personal-heading { padding-top:35px; } .personal-heading h2 { margin-bottom:35px; } .journey-card { min-height:345px; padding:27px 25px; } .journey-line { height:70px; } .personal-copy>p,.personal-interests p { font-size:15px; } }
