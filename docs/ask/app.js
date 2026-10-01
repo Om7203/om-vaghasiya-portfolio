@@ -26,7 +26,7 @@ function addMessage(role, message, sources = []) {
   wrapper.className = `message ${role}`;
   const avatar = document.createElement('span');
   avatar.className = 'avatar';
-  avatar.textContent = role === 'user' ? 'YOU' : 'OV';
+  avatar.textContent = role === 'user' ? '↗' : 'OV';
   const body = document.createElement('div');
   body.className = 'message-body';
   const speaker = document.createElement('span');
