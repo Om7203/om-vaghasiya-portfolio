@@ -85,6 +85,7 @@ async function ask(message) {
 }
 form.addEventListener('submit', (event) => { event.preventDefault(); const message = question.value.trim(); if (message) ask(message); });
 question.addEventListener('keydown', (event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); form.requestSubmit(); } });
+document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && document.documentElement.classList.contains('embed')) parent.postMessage({ type: 'portfolio-chat-close' }, location.origin); });
 document.querySelectorAll('[data-question]').forEach((button) => button.addEventListener('click', () => ask(button.dataset[language === 'de' ? 'questionDe' : 'question'])));
 document.querySelectorAll('[data-lang]').forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
 setLanguage(language);

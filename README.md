@@ -8,6 +8,6 @@ The website is available in English and German. The [interactive work guide](htt
 
 This site uses plain HTML, CSS, and JavaScript. The public files are in [`docs/`](docs/); open `docs/index.html` locally to review the content without installing anything.
 
-You can [ask my AI guide](https://om7203.github.io/om-vaghasiya-portfolio/ask/) about the work on this site. It uses Gemini and a small set of public portfolio facts, and links to the pages behind its answers. The chat page is in [`docs/ask/`](docs/ask/) and the server code and tests are in [`chat-api/`](chat-api/). The server runs on Vercel, with the API key stored there rather than in this repository.
+You can [ask my AI guide](https://om7203.github.io/om-vaghasiya-portfolio/ask/) about the work on this site. A chat button is also available on each portfolio and project page. The guide uses Gemini and a small set of public portfolio facts, and links to the pages behind its answers. The chat page is in [`docs/ask/`](docs/ask/), the shared launcher is in [`docs/widget.js`](docs/widget.js), and the server code and tests are in [`chat-api/`](chat-api/). The server runs on Vercel, with the API key stored there rather than in this repository.
 
 If you'd like to talk about a project or an opportunity, you can [email me](mailto:omvaghasiya2003@gmail.com) or find me on [LinkedIn](https://www.linkedin.com/in/om-vaghasiya-a972ba286/).
