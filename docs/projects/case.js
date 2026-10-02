@@ -3,27 +3,27 @@ const cases = {
     repo: 'https://github.com/Om7203/evidence-desk', demo: '../evidence/index.html',
     en: {
       kind: 'INDEPENDENT BUILD · DOCUMENT INTELLIGENCE', title: 'Find the page.<br><em>Check the claim.</em>',
-      summary: 'I built a search experiment over two public NIST AI documents. It points to the exact PDF pages behind a result, so the reader can check the evidence.',
-      role: 'Independent learning project', period: 'September 2026', stack: 'Python · TF-IDF · BM25 · FastAPI · JavaScript',
+      summary: 'I built page-cited search over two public NIST documents and added an optional generated answer that links back to the retrieved PDF pages.',
+      role: 'Independent learning project', period: 'September–October 2026', stack: 'Python · TF-IDF · BM25 · FastAPI · JavaScript · Gemini',
       challenge: 'A fluent answer can be wrong. Before adding a language model, I wanted a measured way to retrieve the right source page and see when search should decline a question.',
-      approach: 'I downloaded the two source PDFs, extracted text page by page, and split it into overlapping passages. The public demo ranks passages with BM25 directly in the browser; a separate local Python API uses word and character TF-IDF. Both show passages linked to cited PDF pages. Neither generates an answer.',
-      nodes: [['SOURCE','Two NIST PDFs'],['PREP','Page-aware passages'],['SEARCH','Browser BM25'],['CHECK','Cited PDF page']],
-      branches: [['MATCH','Show source passages'],['ABSTAIN','No strong match'],['EVALUATE','Compare with labeled pages']],
+      approach: 'I extracted the PDFs page by page and split them into passages. The public demo searches locally with BM25; the separate answer service searches its own copy of the fixed corpus before asking Gemini for a short answer. It accepts only citations to retrieved passages. A local Python API uses TF-IDF as a second search baseline.',
+      nodes: [['SOURCE','Two NIST PDFs'],['PREP','Page-aware passages'],['SEARCH','Server-side BM25'],['ANSWER','Gemini + checked citation']],
+      branches: [['MATCH','Answer and PDF link'],['ABSTAIN','No supported answer'],['EVALUATE','Labeled-page checks']],
       evidence: [['7 / 9','Browser: expected page first'],['8 / 9','Local API: expected page first'],['9 / 9','Expected page in top three in both']],
-      limit: 'This is an extractive prototype, not a production AI assistant. The 11-question evaluation is small and non-blinded; both versions declined its two unrelated questions. The browser ranker missed the first page for MAP and MEASURE questions, and the Python version missed the confabulation definition. There is no embedding model or generated answer yet.',
-      next: 'I will compare embeddings against the same baseline, add paraphrase and difficult negative questions, then test whether a cited answer step improves usefulness without adding unsupported claims.'
+      limit: 'This remains a prototype. The 11-question evaluation measures retrieved pages, not generated-answer correctness. The rankers have documented misses. The server checks that citations are real retrieved passages, but it cannot prove every sentence is supported by them. There is no embedding comparison or production-grade rate limiting yet.',
+      next: 'I will expand the adversarial question set, review generated claims against the cited text, and compare an embedding retriever with the lexical baseline.'
     },
     de: {
       kind: 'EIGENSTÄNDIGES PROJEKT · DOKUMENTENSUCHE', title: 'Die Seite finden.<br><em>Die Aussage prüfen.</em>',
-      summary: 'Ich habe eine Suche über zwei öffentliche NIST-Dokumente zu KI gebaut. Das Ergebnis verweist auf die genaue PDF-Seite, damit man die Quelle selbst prüfen kann.',
-      role: 'Eigenständiges Lernprojekt', period: 'September 2026', stack: 'Python · TF-IDF · BM25 · FastAPI · JavaScript',
+      summary: 'Ich habe eine Suche über zwei öffentliche NIST-Dokumente gebaut und eine optionale generierte Antwort mit Verweisen auf die gefundenen PDF-Seiten ergänzt.',
+      role: 'Eigenständiges Lernprojekt', period: 'September–Oktober 2026', stack: 'Python · TF-IDF · BM25 · FastAPI · JavaScript · Gemini',
       challenge: 'Eine flüssige Antwort kann falsch sein. Bevor ich ein Sprachmodell ergänze, möchte ich messen, ob die Suche die richtige Seite findet und wann sie besser keine Antwort gibt.',
-      approach: 'Ich habe die beiden PDFs geladen, seitenweise Text extrahiert und ihn in überlappende Abschnitte geteilt. Die öffentliche Demo ordnet Fundstellen mit BM25 direkt im Browser. Eine separate lokale Python-API nutzt TF-IDF auf Wort- und Zeichenebene. Beide verlinken Textstellen auf PDF-Seiten und formulieren keine neue Antwort.',
-      nodes: [['QUELLE','Zwei NIST-PDFs'],['VORBEREITUNG','Abschnitte mit Seitenzahl'],['SUCHE','BM25 im Browser'],['PRÜFEN','Verlinkte PDF-Seite']],
-      branches: [['TREFFER','Quelltext anzeigen'],['KEIN TREFFER','Keine starke Übereinstimmung'],['EVALUATION','Abgleich mit markierten Seiten']],
+      approach: 'Ich habe die PDFs seitenweise extrahiert und in Textabschnitte geteilt. Die öffentliche Demo sucht lokal mit BM25. Für die optionale Antwort durchsucht der Server seine eigene Kopie des festen Korpus und fragt dann Gemini. Er akzeptiert nur Verweise auf tatsächlich gefundene Abschnitte. Eine lokale Python-API nutzt TF-IDF als zweite Suchbasis.',
+      nodes: [['QUELLE','Zwei NIST-PDFs'],['VORBEREITUNG','Abschnitte mit Seitenzahl'],['SUCHE','BM25 auf dem Server'],['ANTWORT','Gemini + geprüfter Verweis']],
+      branches: [['TREFFER','Antwort mit PDF-Link'],['KEIN TREFFER','Keine belegte Antwort'],['EVALUATION','Abgleich mit markierten Seiten']],
       evidence: [['7 / 9','Browser: erwartete Seite zuerst'],['8 / 9','Lokale API: erwartete Seite zuerst'],['9 / 9','Bei beiden unter den ersten drei']],
-      limit: 'Dies ist ein Prototyp für Textsuche, kein produktiver KI-Assistent. Die Evaluation mit elf Fragen ist klein und nicht verblindet; beide Versionen lehnten zwei fremde Fragen ab. Im Browser lagen die Seiten zu MAP und MEASURE nicht auf Platz eins, bei Python war es die Definition von Confabulation. Embeddings und generierte Antworten fehlen noch.',
-      next: 'Ich werde Embeddings mit derselben Basis vergleichen, umformulierte und schwierige Fremdfragen ergänzen und danach prüfen, ob eine Antwort mit Quellen nützlicher ist, ohne unbelegte Aussagen zu erzeugen.'
+      limit: 'Dies bleibt ein Prototyp. Die Evaluation mit elf Fragen prüft gefundene Seiten, nicht die Korrektheit generierter Antworten. Fehlrankings sind dokumentiert. Der Server prüft, ob die Verweise auf gefundene Abschnitte zeigen, kann aber nicht beweisen, dass jeder Satz durch sie gedeckt ist. Ein Embedding-Vergleich und eine belastbare Ratenbegrenzung fehlen noch.',
+      next: 'Ich werde schwierige Fragen ergänzen, generierte Aussagen gegen die Quellen prüfen und einen Embedding-Retriever mit der Textsuche vergleichen.'
     }
   },
   support: {

@@ -4,6 +4,6 @@
   "type": "module",
   "scripts": {
     "dev": "node local-server.mjs",
-    "test": "node --test --experimental-test-isolation=none answer.test.mjs"
+    "test": "node --test --experimental-test-isolation=none answer.test.mjs evidence.test.mjs"
   }
 }

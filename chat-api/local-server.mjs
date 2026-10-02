@@ -3,15 +3,16 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { handleChat } from './answer.mjs';
+import { handleEvidence } from './evidence.mjs';
 
 const docs = normalize(fileURLToPath(new URL('../docs/', import.meta.url))).replace(/[\\/]+$/, '');
 const mime = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png' };
 createServer(async (req, res) => {
-  if (req.url === '/api/chat') {
+  if (req.url === '/api/chat' || req.url === '/api/evidence') {
     const chunks = [];
     for await (const chunk of req) chunks.push(chunk);
     const request = new Request('http://localhost:4173/api/chat', { method: req.method, headers: req.headers, body: ['GET', 'HEAD'].includes(req.method) ? undefined : Buffer.concat(chunks) });
-    const response = await handleChat(request);
+    const response = await (req.url === '/api/evidence' ? handleEvidence(request) : handleChat(request));
     res.writeHead(response.status, Object.fromEntries(response.headers));
     res.end(Buffer.from(await response.arrayBuffer()));
     return;
