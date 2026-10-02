@@ -134,3 +134,8 @@ main section.personal-section { scroll-margin-top:80px; }
 .personal-interests p { color:var(--text); font-size:16px; line-height:1.8; margin:14px 0 0; }
 @media(max-width:850px) { .personal-section { padding-top:75px; } .personal-layout { grid-template-columns:1fr; gap:32px; } .journey-card { min-height:385px; } .personal-copy { max-width:740px; } }
 @media(max-width:500px) { .personal-section { padding-top:65px; } .personal-heading { padding-top:35px; } .personal-heading h2 { margin-bottom:35px; } .journey-card { min-height:345px; padding:27px 25px; } .journey-line { height:70px; } .personal-copy>p,.personal-interests p { font-size:15px; } }
+
+.credential-documents-link { display:flex; align-items:center; justify-content:space-between; gap:24px; width:calc(100% - 220px); margin:29px 0 0 220px; padding:20px 23px; border:1px solid rgba(200,245,106,.55); color:var(--accent); text-decoration:none; font-size:15px; font-weight:700; transition:background .2s,color .2s; }
+.credential-documents-link:hover { background:var(--accent); color:#101815; }
+.credential-documents-link span:last-child { font-size:23px; line-height:1; }
+@media(max-width:850px) { .credential-documents-link { width:100%; margin-left:0; } }
