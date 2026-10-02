@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101815" />
+    <meta name="description" content="A quick tour of Om Vaghasiya's AI and software work, with live demos, project evidence, and links to the code." />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <title>60-second tour | Om Vaghasiya</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+    <script src="../widget.js?v=1" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#tour-title">Skip to the tour</a>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="../index.html" aria-label="Om Vaghasiya home"><span class="brand-mark">OV</span><span>Om Vaghasiya<span class="dot">.</span></span></a>
+        <div class="topbar-right">
+          <span class="edition" data-text="edition">A quick introduction</span>
+          <div class="language" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><span>/</span><button type="button" data-lang="de" aria-pressed="false">DE</button></div>
+          <a class="back-link" href="../index.html"><span data-text="back">Full portfolio</span><span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+
+      <main class="tour-shell">
+        <div class="tour-heading"><div><p class="eyebrow"><span class="live-dot"></span><span data-text="eyebrow">A TOUR FOR BUSY PEOPLE</span></p><h1 id="tour-title" data-text="title">My work, in about a minute.</h1><p class="intro" data-text="intro">Four short stops. Open the demos or code wherever you want a closer look.</p></div><span class="time-stamp">OV / <span data-text="time">~60 SEC</span></span></div>
+
+        <nav class="step-nav" aria-label="Tour steps" id="step-nav"></nav>
+        <div class="progress-track" aria-hidden="true"><span id="progress-fill"></span></div>
+        <div id="stage" class="stage" aria-live="polite"></div>
+        <div class="tour-controls"><button class="control control-back" type="button" id="previous"><span aria-hidden="true">←</span><span data-text="previous">Previous</span></button><span class="step-count" id="step-count">01 / 04</span><button class="control control-next" type="button" id="next"><span data-text="next">Next stop</span><span aria-hidden="true">→</span></button></div>
+        <p class="keyboard-note" data-text="keyboard">Tip: use the left and right arrow keys to move through the tour.</p>
+      </main>
+      <footer class="footer"><span>© <span id="year"></span> Om Vaghasiya</span><a href="mailto:omvaghasiya2003@gmail.com">omvaghasiya2003@gmail.com ↗</a></footer>
+    </div>
+  </body>
+</html>
