@@ -8,6 +8,8 @@ The website is available in English and German. The [interactive work guide](htt
 
 The [60-second tour](https://om7203.github.io/om-vaghasiya-portfolio/tour/) is a short way to see my experience and two projects. Each project links to a demo, a detailed write-up, and the code.
 
+Questions in the Evidence Desk and Support Agent Lab demos are stored in the page URL after they run, so individual retrieval and routing examples can be shared directly.
+
 My [supporting documents](https://om7203.github.io/om-vaghasiya-portfolio/documents/) include two work references, my August 2026 university transcript, and four selected course certificates. The public certificate PDF contains only certificates issued in my name.
 
 This site uses plain HTML, CSS, and JavaScript. The public files are in [`docs/`](docs/); open `docs/index.html` locally to review the content without installing anything.

@@ -5,6 +5,8 @@ const input = document.querySelector('#question');
 const output = document.querySelector('#result');
 const traceList = document.querySelector('#trace-list');
 const isStatic = location.port !== '3000';
+const sharedQuestion = new URLSearchParams(window.location.search).get('q')?.trim();
+if (sharedQuestion) input.value = sharedQuestion.slice(0, input.maxLength);
 document.querySelector('#runtime-label').textContent = isStatic ? 'BROWSER DEMO · NO MODEL CALL' : 'LOCAL LANGGRAPH SERVER';
 document.querySelector('#trace-runtime').textContent = isStatic ? 'BROWSER RULES' : 'LANGGRAPH';
 if (!isStatic) document.querySelector('.trace-note').textContent = 'This local page calls the LangGraph server. The public portfolio demo runs the same deterministic decision rules in your browser; neither version calls a live language model.';
@@ -24,6 +26,9 @@ function render(result) {
 }
 
 async function run(question) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('q', question);
+  window.history.replaceState({}, '', url);
   output.textContent = 'Running the workflow…';
   try {
     let result;
