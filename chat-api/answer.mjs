@@ -49,7 +49,7 @@ export async function handleChat(request, { env = process.env, fetcher = fetch }
   const timer = setTimeout(() => controller.abort(), 18000);
   try {
     const model = env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
-    const upstream = await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const modelRequest = () => fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: 'POST',
       headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'content-type': 'application/json' },
       body: JSON.stringify({
@@ -59,7 +59,10 @@ export async function handleChat(request, { env = process.env, fetcher = fetch }
       }),
       signal: controller.signal
     });
-    if (!upstream.ok) return json({ error: 'The assistant is unavailable. Please try again later.' }, 502, origin);
+    let upstream = await modelRequest();
+    if (upstream.status >= 500 && upstream.status < 600) upstream = await modelRequest();
+    if (upstream.status === 429) return json({ error: 'The assistant is busy. Please try again in a minute.', code: 'rate_limited' }, 429, origin);
+    if (!upstream.ok) return json({ error: 'The answer service is temporarily unavailable.', code: 'upstream_unavailable' }, 503, origin);
     const payload = await upstream.json();
     const raw = payload.candidates?.[0]?.content?.parts?.map((part) => part.text || '').join('') || '';
     const result = JSON.parse(raw);
@@ -67,7 +70,8 @@ export async function handleChat(request, { env = process.env, fetcher = fetch }
     const citations = result.grounded ? [...new Set(result.source_ids)].map((id) => sourceById.get(id)).filter(Boolean).slice(0, 3).map(({ id, label, url }) => ({ id, label, url })) : [];
     if (result.grounded && citations.length === 0) throw new Error('Missing citation');
     return json({ answer: result.answer.slice(0, 1500), sources: citations }, 200, origin);
-  } catch {
-    return json({ error: 'The assistant is unavailable. Please try again later.' }, 502, origin);
+  } catch (error) {
+    if (controller.signal.aborted) return json({ error: 'The answer service timed out. Please try again.', code: 'timeout' }, 504, origin);
+    return json({ error: 'The answer service could not complete this request.', code: 'answer_failed' }, 502, origin);
   } finally { clearTimeout(timer); }
 }

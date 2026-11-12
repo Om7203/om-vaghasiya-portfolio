@@ -39,3 +39,23 @@ test('does not accept other website origins or call the model without a key', as
   const noKey = await handleChat(request({ message: 'Hello' }), { env: {} });
   assert.equal(noKey.status, 503);
 });
+
+test('retries a temporary model failure and keeps rate limits visible', async () => {
+  let attempts = 0;
+  const recovered = await handleChat(request({ message: 'What is Support Agent Lab?' }), {
+    env: { GEMINI_API_KEY: 'test' },
+    fetcher: async () => {
+      attempts += 1;
+      return attempts === 1 ? new Response('{}', { status: 503 }) : modelResponse({ answer: 'A support workflow.', source_ids: ['support'], grounded: true });
+    }
+  });
+  assert.equal(recovered.status, 200);
+  assert.equal(attempts, 2);
+
+  const limited = await handleChat(request({ message: 'What is Support Agent Lab?' }), {
+    env: { GEMINI_API_KEY: 'test' },
+    fetcher: async () => new Response('{}', { status: 429 })
+  });
+  assert.equal(limited.status, 429);
+  assert.equal((await limited.json()).code, 'rate_limited');
+});
