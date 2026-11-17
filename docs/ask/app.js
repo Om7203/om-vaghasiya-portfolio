@@ -10,6 +10,7 @@ const availability = document.querySelector('#availability');
 const endpoint = `${(window.PORTFOLIO_CHAT_API || '').replace(/\/$/, '')}/api/chat`;
 let language = localStorage.getItem('portfolio-language') === 'de' ? 'de' : 'en';
 let connected = false;
+let connectionCheck = null;
 let history = [];
 
 function setLanguage(lang) {
@@ -19,7 +20,7 @@ function setLanguage(lang) {
   document.querySelectorAll('[data-copy]').forEach((node) => { node.innerHTML = copy[lang][node.dataset.copy]; });
   document.querySelectorAll('[data-lang]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.lang === lang)));
   question.placeholder = copy[lang].placeholder;
-  availability.textContent = copy[lang][connected ? 'ready' : 'offline'];
+  availability.textContent = copy[lang][connectionCheck ? 'connecting' : connected ? 'ready' : 'offline'];
 }
 function addMessage(role, message, sources = []) {
   const wrapper = document.createElement('div');
@@ -58,18 +59,25 @@ function addMessage(role, message, sources = []) {
   return wrapper;
 }
 async function checkConnection() {
-  try {
-    const response = await fetch(endpoint, { method: 'GET', cache: 'no-store' });
-    const state = await response.json();
-    connected = response.ok && state.available === true;
-  } catch { connected = false; }
-  availability.textContent = copy[language][connected ? 'ready' : 'offline'];
-  availability.classList.toggle('is-live', connected);
+  if (connectionCheck) return connectionCheck;
+  availability.textContent = copy[language].connecting;
+  connectionCheck = (async () => {
+    try {
+      const response = await fetch(endpoint, { method: 'GET', cache: 'no-store' });
+      const state = await response.json();
+      connected = response.ok && state.available === true;
+    } catch { connected = false; }
+    availability.textContent = copy[language][connected ? 'ready' : 'offline'];
+    availability.classList.toggle('is-live', connected);
+    return connected;
+  })();
+  try { return await connectionCheck; }
+  finally { connectionCheck = null; }
 }
 async function ask(message) {
   addMessage('user', message);
   question.value = '';
-  if (!connected) { addMessage('assistant', copy[language].unavailable); return; }
+  if (!connected && !(await checkConnection())) { addMessage('assistant', copy[language].unavailable); return; }
   send.disabled = true;
   question.disabled = true;
   const pending = addMessage('assistant', copy[language].thinking);
